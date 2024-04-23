@@ -1,5 +1,8 @@
 package day_3.models;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class Person {
     private String firstName;
     private String lastName;
@@ -7,16 +10,15 @@ public class Person {
     private int age;
     private double height;
     private boolean married;
-    private String[] petNames;
+    private Set<Pet> pets = new HashSet<>();
 
-    public Person(String firstName, String lastName, String identityCard, int age, double height, boolean married, String[] petNames) {
+    public Person(String firstName, String lastName, String identityCard, int age, double height, boolean married) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.identityCard = identityCard;
         this.age = age;
         this.height = height;
         this.married = married;
-        this.petNames = petNames;
     }
 
     public String getFirstName() {
@@ -67,14 +69,18 @@ public class Person {
         this.married = married;
     }
 
-    public String[] getPetNames() {
-        return petNames;
+    public Set<Pet> getPets() {
+        return pets;
     }
 
-    public void setPetNames(String[] petNames) {
-        this.petNames = petNames;
+    public void setPets(Set<Pet> pets) {
+        this.pets = pets;
     }
 
+    public void addPet(Pet pet) {
+        pets.add(pet);
+        pet.setOwner(this);
+    }
     public void introduceYourself() {
         System.out.println("¡Hola! Mi nombre es " + this.getFirstName() + " " + this.getLastName());
         System.out.println("Tengo " + this.getAge() + " años");
@@ -84,9 +90,9 @@ public class Person {
             System.out.println("No estoy casada/o");
         }
         System.out.println("Mi DNI es " + this.getIdentityCard());
-        System.out.println("Mis mascotas se llaman: ");
-        for(String mascota : this.getPetNames()) {
-            System.out.println("* " + mascota);
+        System.out.println("Mis mascota/s se llama/n: ");
+        for(Pet pet : this.getPets()) {
+            System.out.println("* " + pet.getName() + " es un " + pet.getType().toString().toLowerCase() + " y tiene " + pet.getAge() + " años.");
         }
     }
 }
